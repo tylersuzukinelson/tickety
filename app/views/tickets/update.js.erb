@@ -1,0 +1,3 @@
+<% unless @ticket.errors.any? %>
+  $('#<%= dom_id(@ticket) %>').replaceWith('<%= j render partial: "/tickets/ticket", locals: { ticket: @ticket } %>');
+<% end %>

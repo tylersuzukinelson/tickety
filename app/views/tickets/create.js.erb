@@ -1,0 +1,5 @@
+<% unless @ticket.errors.any? %>
+  $('.modal-body').html('<%= j render partial: "/tickets/form", locals: { ticket: Ticket.new } %>');
+  $('#myModal').modal('hide');
+  $('#tickets').prepend('<%= j render partial: "/tickets/ticket", locals: { ticket: @ticket } %>');
+<% end %>

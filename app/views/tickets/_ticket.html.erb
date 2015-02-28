@@ -1,0 +1,24 @@
+<div id="<%= dom_id(ticket) %>">
+  <%= link_to "edit", edit_ticket_path(ticket), class: "btn btn-warning btn-xs" %>
+  <%= link_to "delete", ticket_path(ticket), method: :delete, class: "btn btn-danger btn-xs" %>
+  <strong><%= link_to ticket.title, ticket %></strong><br />
+  <%= ticket.body %>
+  <div>
+    By <%= ticket.user.email %>
+    <span class="pull-right">
+      <% if ticket.resolved_by %>
+        Resolved by <%= User.find(ticket.resolved_by).email %>
+        <%= form_for ticket, remote: true, html: { style: "display: inline-block" } do |f| %>
+          <%= f.hidden_field :resolved_by, value: nil %>
+          <%= f.submit "Mark un-Resolved", class: "btn btn-default" %>
+        <% end %>
+      <% else %>
+        <%= form_for ticket, remote: true, html: { style: "display: inline-block" } do |f| %>
+          <%= f.hidden_field :resolved_by, value: current_user.id %>
+          <%= f.submit "Mark Resolved", class: "btn btn-default" %>
+        <% end %>
+      <% end %>
+    </span>
+  </div>
+  <hr>
+</div>

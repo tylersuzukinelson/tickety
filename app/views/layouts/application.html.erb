@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tickety</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="container">
+
+  <div>
+    <strong><%= link_to "Tickety", root_path %></strong>
+    <span class="pull-right">
+      <% if user_signed_in? %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+        <br />
+        <%= button_tag "New Ticket", class: "btn btn-default", data: { toggle: "modal", target: "#myModal" } %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path %>
+         | 
+        <%= link_to "Register", new_user_registration_path %>
+      <% end %>
+    </span>
+  </div>
+
+  <hr style="margin-top: 50px; ">
+
+  <%= yield %>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Create New Ticket</h4>
+        </div>
+        <div class="modal-body">
+          <%= render partial: "/tickets/form", locals: { ticket: Ticket.new } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
